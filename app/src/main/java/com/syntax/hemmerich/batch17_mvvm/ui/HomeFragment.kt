@@ -31,20 +31,26 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fillViews()
+        addAllObserver()
+
 
         binding.btnNextPlane.setOnClickListener {
             viewModel.nextPlane()
-           fillViews()
         }
         binding.btnPrevPlane.setOnClickListener {
             viewModel.prevPlane()
-           fillViews()
+        }
+        binding.btnFirst.setOnClickListener {
+            viewModel.goToFirstPlane()
         }
     }
-    fun fillViews(){
-        binding.tvPlaneNbr.text = viewModel.currentPlane.planeNumber.toString()
-        binding.tvPlaneName.text = viewModel.currentPlane.planeName
+
+    private fun addAllObserver(){
+        viewModel.currentPlane.observe(viewLifecycleOwner){
+            binding.tvPlaneNbr.text = it.planeNumber.toString()
+            binding.tvPlaneName.text = it.planeName
+        }
     }
+
 
 }
